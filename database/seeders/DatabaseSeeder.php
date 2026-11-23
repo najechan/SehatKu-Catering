@@ -8,6 +8,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Seeder ditambahkan pada commit "seeder admin, kategori, dan menu contoh".
+        $this->call([
+            UserSeeder::class,
+            KategoriSeeder::class,
+            MenuSeeder::class,
+        ]);
     }
 }
