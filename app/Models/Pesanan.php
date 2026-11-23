@@ -21,6 +21,9 @@ class Pesanan extends Model
         self::DIBATALKAN => 'Dibatalkan',
     ];
 
+    /** Status yang dihitung di rekap dapur per tanggal antar. */
+    public const STATUS_UNTUK_REKAP = [self::DIPROSES, self::DIANTAR, self::SELESAI];
+
     protected $table = 'pesanan';
 
     protected $fillable = [

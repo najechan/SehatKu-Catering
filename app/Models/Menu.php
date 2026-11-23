@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Menu extends Model
 {
@@ -46,5 +47,21 @@ class Menu extends Model
     public function scopeAktif(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+        /** URL foto utama; memakai placeholder jika belum ada foto. */
+    protected function fotoUrl(): Attribute
+    {
+        return Attribute::get(fn () => $this->foto_utama
+            ? asset('storage/' . $this->foto_utama)
+            : asset('images/menu-placeholder.svg'));
+    }
+
+    /** Kalori hasil hitung makro (4/4/9), dipakai untuk peringatan di form admin. */
+    protected function kaloriMakro(): Attribute
+    {
+        return Attribute::get(fn () => (int) round(
+            $this->protein * 4 + $this->karbohidrat * 4 + $this->lemak * 9
+        ));
     }
 }

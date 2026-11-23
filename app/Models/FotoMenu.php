@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class FotoMenu extends Model
 {
@@ -14,5 +15,10 @@ class FotoMenu extends Model
     public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class, 'menu_id');
+    }
+
+        protected function url(): Attribute
+    {
+        return Attribute::get(fn () => asset('storage/' . $this->path));
     }
 }
